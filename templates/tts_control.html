@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Text-to-Speech Control{% endblock %}
+
+{% block content %}
+<h1>Text-to-Speech Control</h1>
+<p>
+Enter text below and the PiCarX will speak it using TTS (Text-to-Speech).
+The text is sent to <code>{{ tts_feed }}</code>.
+</p>
+
+<form method="post" style="margin-top:30px;">
+    <div>
+        <label for="text" style="display:block; margin-bottom:10px; font-size:16px;">
+            Enter text to speak:
+        </label>
+        <input
+            type="text"
+            id="text"
+            name="text"
+            style="width:500px; padding:10px; font-size:16px;"
+            placeholder="e.g., Hello world, I am PiCarX"
+            maxlength="200"
+        >
+    </div>
+    <button type="submit" style="margin-top:15px; padding:10px 30px; font-size:16px;">
+        🔊 Speak
+    </button>
+</form>
+
+{% if msg_ok %}
+  <p class="msg-ok">{{ msg_ok }}</p>
+{% endif %}
+{% if msg_err %}
+  <p class="msg-err">{{ msg_err }}</p>
+{% endif %}
+
+<div style="margin-top:40px; padding:15px; background:#222; border:1px solid #555;">
+    <h3>Quick Phrases:</h3>
+    <button onclick="quickSpeak('Hello, I am PiCarX')" style="margin:5px;">Hello</button>
+    <button onclick="quickSpeak('Obstacle detected')" style="margin:5px;">Obstacle detected</button>
+    <button onclick="quickSpeak('Line tracking started')" style="margin:5px;">Line tracking</button>
+    <button onclick="quickSpeak('Mission complete')" style="margin:5px;">Mission complete</button>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function quickSpeak(text) {
+    document.getElementById('text').value = text;
+    document.querySelector('form').submit();
+}
+</script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Sensor data table{% endblock %}
+
+{% block content %}
+<h1>Show sensor data (table)</h1>
+<form method="get">
+    <label for="date">Choose date (UTC):</label>
+    <input type="date" id="date" name="date" value="{{ chosen_date }}">
+    <button type="submit">Load</button>
+</form>
+
+<h2>Readings for {{ chosen_date }}</h2>
+{% if rows %}
+    <table>
+        <tr>
+            <th>Timestamp (UTC)</th>
+            <th>Sensor</th>
+            <th>Value</th>
+        </tr>
+        {% for r in rows %}
+        <tr>
+            <td>{{ r.ts_utc }}</td>
+            <td>{{ r.sensor_name }}</td>
+            <td>{{ r.value }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No readings for this date.</p>
+{% endif %}
+{% endblock %}

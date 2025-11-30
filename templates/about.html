@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}About – PiCarX{% endblock %}
+
+{% block content %}
+<h1>About this project</h1>
+<p>
+This IoT project uses a Raspberry Pi and the PiCarX robot car.
+The Pi sends sensor data (ultrasonic distance, grayscale sensors, and TTS text)
+to Adafruit IO and also stores it in a local SQLite database.
+When Internet is available, the Pi synchronizes the local data with a Neon
+PostgreSQL database in the cloud.
+</p>
+<p>
+This Flask web app connects to:
+</p>
+<ul>
+    <li>Adafruit IO (for live sensor values and remote control).</li>
+    <li>Neon (for querying and plotting historical sensor data).</li>
+</ul>
+{% endblock %}

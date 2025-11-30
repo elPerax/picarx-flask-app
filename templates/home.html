@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}PiCarX Live Dashboard{% endblock %}
+
+{% block content %}
+<h1>PiCarX Live Dashboard</h1>
+<p>
+This page shows <b>live data</b> from Adafruit IO for the ultrasonic sensor,
+the middle grayscale sensor, and the last TTS message spoken by the car.
+</p>
+
+<div class="card">
+    <h2>Live sensors (Adafruit IO)</h2>
+    <canvas id="liveChart" width="900" height="400"></canvas>
+</div>
+
+<div class="card">
+    <h2>Last TTS message</h2>
+    <p><b>Text:</b> <span id="tts_text">(loading...)</span></p>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+let liveChart = null;
+
+async function loadLive() {
+    try {
+        const res = await fetch("/api/live");
+        const data = await res.json();
+        if (!res.ok) {
+            console.error("Error from /api/live:", data);
+            return;
+        }
+
+        const labels = data.labels || [];
+        const ultra = data.ultrasonic || [];
+        const grayMid = data.gray_mid || [];
+        const tts = data.tts || "(no data)";
+        document.getElementById("tts_text").textContent = tts;
+
+        const ctx = document.getElementById("liveChart").getContext("2d");
+
+        if (liveChart) {
+            liveChart.data.labels = labels;
+            liveChart.data.datasets[0].data = ultra;
+            liveChart.data.datasets[1].data = grayMid;
+            liveChart.update();
+        } else {
+            liveChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Ultrasonic (cm)",
+                            data: ultra,
+                            tension: 0.2,
+                            fill: false,
+                        },
+                        {
+                            label: "Grayscale mid",
+                            data: grayMid,
+                            tension: 0.2,
+                            fill: false,
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: { title: { display: true, text: "Time" } },
+                        y: { title: { display: true, text: "Value" } }
+                    }
+                }
+            });
+        }
+    } catch (e) {
+        console.error("Network error calling /api/live:", e);
+    }
+}
+
+loadLive();
+setInterval(loadLive, 5000);
+</script>
+{% endblock %}

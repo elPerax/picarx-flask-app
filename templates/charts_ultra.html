@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Ultrasonic distance chart{% endblock %}
+
+{% block content %}
+<h1>Ultrasonic distance chart</h1>
+<form method="get">
+    <label for="date">Choose date (UTC):</label>
+    <input type="date" id="date" name="date" value="{{ chosen_date }}">
+    <button type="submit">Load</button>
+</form>
+
+<p>Ultrasonic distance readings for {{ chosen_date }}.</p>
+
+{% if labels %}
+    <canvas id="ultraChart" width="800" height="400"></canvas>
+{% else %}
+    <p>No ultrasonic data found for this date.</p>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+{% if labels %}
+<script>
+    const ultraLabels = {{ labels | tojson }};
+    const ultraDataValues = {{ values | tojson }};
+
+    const ctx = document.getElementById('ultraChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ultraLabels,
+            datasets: [{
+                label: 'Distance (cm)',
+                data: ultraDataValues,
+                tension: 0.25,
+                fill: false,
+            }]
+        },
+        options: {
+            scales: {
+                x: { title: { display: true, text: 'Time (UTC)' } },
+                y: { title: { display: true, text: 'Distance (cm)' } }
+            }
+        }
+    });
+</script>
+{% endif %}
+
+
+
+{% endblock %}

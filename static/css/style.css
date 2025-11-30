@@ -1,0 +1,350 @@
+/* ====== Global layout ====== */
+
+:root {
+    --bg-main: #05070b;
+    --bg-elevated: #111827;
+    --bg-elevated-soft: #0b1020;
+    --accent: #38bdf8;      /* cyan */
+    --accent-soft: #0ea5e9;
+    --accent-strong: #f97316; /* orange for highlights */
+    --text-main: #e5e7eb;
+    --text-muted: #9ca3af;
+    --border-subtle: #1f2933;
+    --danger: #f97373;
+    --success: #4ade80;
+    --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.6);
+    --radius-lg: 18px;
+    --radius-pill: 999px;
+    --transition-fast: 0.18s ease-out;
+    --transition-med: 0.25s ease-out;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
+    color: var(--text-main);
+    line-height: 1.5;
+}
+
+/* ====== Top navigation ====== */
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.85rem 1.75rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+    background: linear-gradient(to right, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
+    backdrop-filter: blur(18px);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.7);
+}
+
+.nav::before {
+    content: "PiCarX • Dashboard";
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-right: 1rem;
+    padding-right: 1.5rem;
+    border-right: 1px solid rgba(148, 163, 184, 0.35);
+    color: #f9fafb;
+}
+
+.nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    transition: background var(--transition-fast),
+                border-color var(--transition-fast),
+                color var(--transition-fast),
+                transform var(--transition-fast);
+}
+
+.nav a:hover {
+    background: rgba(56, 189, 248, 0.16);
+    border-color: rgba(56, 189, 248, 0.6);
+    color: #e5f8ff;
+    transform: translateY(-1px);
+}
+
+.nav a:active {
+    transform: translateY(0);
+}
+
+/* ====== Page content wrapper ====== */
+
+.container {
+    max-width: 1100px;
+    margin: 2.2rem auto 3rem;
+    padding: 0 1.4rem 2rem;
+}
+
+/* ====== Headings & text ====== */
+
+h1 {
+    font-size: 1.9rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.03em;
+    color: #f9fafb;
+}
+
+h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.6rem;
+    color: #e5e7eb;
+}
+
+h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+    color: #e5e7eb;
+}
+
+p {
+    margin-bottom: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* highlight certain inline text */
+b, strong {
+    color: var(--accent-soft);
+}
+
+/* ====== Cards / panels ====== */
+
+.card {
+    margin-top: 1.6rem;
+    padding: 1.3rem 1.5rem;
+    border-radius: var(--radius-lg);
+    background: radial-gradient(circle at top left, #111827, #020617 80%);
+    border: 1px solid rgba(31, 41, 55, 0.9);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Extra spacing for paired cards (like live dashboard) */
+.card + .card {
+    margin-top: 1.1rem;
+}
+
+/* ====== Tables ====== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.1rem;
+    font-size: 0.9rem;
+    border-radius: 0.9rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    background: #020617;
+}
+
+thead,
+tr:nth-child(even) {
+    background: rgba(15, 23, 42, 0.96);
+}
+
+th,
+td {
+    padding: 0.55rem 0.85rem;
+    border-bottom: 1px solid rgba(31, 41, 55, 0.95);
+}
+
+th {
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.11em;
+    color: #9ca3af;
+}
+
+tbody tr:hover {
+    background: rgba(15, 23, 42, 0.85);
+}
+
+/* ====== Forms & controls ====== */
+
+form {
+    margin-top: 1.1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+input[type="date"],
+input[type="text"],
+select {
+    padding: 0.5rem 0.7rem;
+    min-width: 210px;
+    border-radius: 0.55rem;
+    border: 1px solid rgba(75, 85, 99, 0.9);
+    background: rgba(15, 23, 42, 0.95);
+    color: var(--text-main);
+    outline: none;
+    transition: border-color var(--transition-fast),
+                box-shadow var(--transition-fast),
+                background var(--transition-fast);
+}
+
+input[type="date"]:focus,
+input[type="text"]:focus,
+select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+    background: #020617;
+}
+
+/* ====== Buttons ====== */
+
+button,
+input[type="submit"] {
+    cursor: pointer;
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent-strong));
+    color: #0b1020;
+    padding: 0.55rem 1.3rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    box-shadow: 0 12px 28px rgba(8, 47, 73, 0.7);
+    transition: transform var(--transition-med),
+                box-shadow var(--transition-med),
+                filter var(--transition-med);
+}
+
+button:hover,
+input[type="submit"]:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+    box-shadow: 0 18px 40px rgba(8, 47, 73, 0.9);
+}
+
+button:active,
+input[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 20px rgba(8, 47, 73, 0.75);
+}
+
+/* Secondary / subtle button look */
+button.secondary {
+    background: transparent;
+    color: var(--text-muted);
+    border-color: rgba(148, 163, 184, 0.4);
+    box-shadow: none;
+}
+
+button.secondary:hover {
+    border-color: var(--accent);
+    color: #e5f8ff;
+    background: rgba(15, 23, 42, 0.9);
+}
+
+/* ====== Messages ====== */
+
+.msg-ok {
+    margin-top: 0.7rem;
+    font-size: 0.9rem;
+    color: var(--success);
+}
+
+.msg-err {
+    margin-top: 0.7rem;
+    font-size: 0.9rem;
+    color: var(--danger);
+}
+
+/* ====== Charts / canvas ====== */
+
+canvas {
+    width: 100% !important;
+    max-height: 420px;
+    background: radial-gradient(circle at top, #020617, #020617 58%, #000 100%);
+    border-radius: 1rem;
+    border: 1px solid rgba(31, 41, 55, 0.9);
+    padding: 0.5rem;
+    box-shadow: var(--shadow-soft);
+}
+
+/* ====== Quick phrases section (TTS) ====== */
+
+.quick-phrases {
+    margin-top: 1.4rem;
+    padding: 1rem 1.1rem;
+    border-radius: 1rem;
+    background: radial-gradient(circle at top left, #0b1120, #020617 85%);
+    border: 1px dashed rgba(75, 85, 99, 0.9);
+}
+
+.quick-phrases h3 {
+    margin-bottom: 0.4rem;
+}
+
+.quick-phrases button {
+    margin: 0.25rem 0.4rem 0 0;
+}
+
+/* ====== Small utility spacing ====== */
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+
+/* ====== Responsive tweaks ====== */
+
+@media (max-width: 768px) {
+    .container {
+        margin-top: 1.4rem;
+        padding-inline: 1rem;
+    }
+
+    .nav {
+        padding-inline: 1rem;
+    }
+
+    .nav::before {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+        padding-bottom: 0.4rem;
+        margin-bottom: 0.4rem;
+        margin-right: 0;
+    }
+
+    form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    input[type="date"],
+    input[type="text"],
+    select {
+        width: 100%;
+    }
+}

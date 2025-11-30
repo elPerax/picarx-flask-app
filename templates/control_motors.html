@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Control Motors{% endblock %}
+
+{% block content %}
+<h1>Control Motors</h1>
+<p>
+Control the car's motors (forward/backward/stop).
+Commands sent to <code>{{ command_feed }}</code>.
+</p>
+
+<div class="motor-grid">
+    <div></div>
+    <button onclick="sendCmd('forward')">▲ Forward</button>
+    <div></div>
+
+    <div></div>
+    <button onclick="sendCmd('stop')">■ Stop</button>
+    <div></div>
+
+    <div></div>
+    <button onclick="sendCmd('backward')">▼ Backward</button>
+    <div></div>
+</div>
+
+<p id="status" class="msg"></p>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+async function sendCmd(dir) {
+    const statusEl = document.getElementById('status');
+    statusEl.textContent = "Sending '" + dir + "'...";
+    try {
+        const res = await fetch("/api/control", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ direction: dir })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            statusEl.textContent = "Command sent: " + dir;
+        } else {
+            statusEl.textContent = "Error: " + (data.error || "unknown error");
+        }
+    } catch (e) {
+        statusEl.textContent = "Network error: " + e;
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Line tracking{% endblock %}
+
+{% block content %}
+<h1>Line tracking</h1>
+<p>
+Start or stop the <b>line tracking algorithm</b> by sending commands to
+<code>{{ line_feed }}</code>.
+</p>
+
+<form method="post" style="margin-top:20px;">
+    <button type="submit" name="cmd" value="start">▶ Start line tracking</button>
+    <button type="submit" name="cmd" value="stop">■ Stop line tracking</button>
+</form>
+
+{% if msg_ok %}
+  <p class="msg-ok">{{ msg_ok }}</p>
+{% endif %}
+{% if msg_err %}
+  <p class="msg-err">{{ msg_err }}</p>
+{% endif %}
+{% endblock %}

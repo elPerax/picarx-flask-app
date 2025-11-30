@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Obstacle avoidance{% endblock %}
+
+{% block content %}
+<h1>Obstacle avoidance</h1>
+<p>
+Start or stop the <b>obstacle avoidance algorithm</b> by sending commands to
+<code>{{ obstacle_feed }}</code>.
+</p>
+
+<form method="post" style="margin-top:20px;">
+    <button type="submit" name="cmd" value="start">▶ Start obstacle avoidance</button>
+    <button type="submit" name="cmd" value="stop">■ Stop obstacle avoidance</button>
+</form>
+
+{% if msg_ok %}
+  <p class="msg-ok">{{ msg_ok }}</p>
+{% endif %}
+{% if msg_err %}
+  <p class="msg-err">{{ msg_err }}</p>
+{% endif %}
+{% endblock %}

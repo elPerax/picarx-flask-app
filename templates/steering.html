@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Control Steering{% endblock %}
+
+{% block content %}
+<h1>Control Steering</h1>
+<p>
+Control the direction servo (wheels steering left/right/center).
+Commands sent to <code>{{ steering_feed }}</code>.
+</p>
+
+<div class="button-row">
+    <button onclick="sendSteering('left')">◀ Steer Left</button>
+    <button onclick="sendSteering('center')">● Center</button>
+    <button onclick="sendSteering('right')">▶ Steer Right</button>
+</div>
+
+<p id="steering-status" class="msg"></p>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+async function sendSteering(dir) {
+    const statusEl = document.getElementById('steering-status');
+    statusEl.textContent = "Sending '" + dir + "'...";
+    try {
+        const res = await fetch("/api/steering", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ direction: dir })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            statusEl.textContent = "Steering command sent: " + dir;
+        } else {
+            statusEl.textContent = "Error: " + (data.error || "unknown error");
+        }
+    } catch (e) {
+        statusEl.textContent = "Network error: " + e;
+    }
+}
+</script>
+{% endblock %}

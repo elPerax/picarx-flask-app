@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Camera Control{% endblock %}
+
+{% block content %}
+<h1>Camera Control</h1>
+<p>
+Control the camera pan (left/right) and tilt (up/down) servos.
+Commands sent to <code>{{ camera_feed }}</code>.
+</p>
+
+<div style="margin-top:30px;">
+    <h2>Camera Pan (Horizontal)</h2>
+    <div class="button-row">
+        <button onclick="sendCamera('pan_left')">◀ Pan Left</button>
+        <button onclick="sendCamera('pan_center')">● Pan Center</button>
+        <button onclick="sendCamera('pan_right')">▶ Pan Right</button>
+    </div>
+</div>
+
+<div style="margin-top:40px;">
+    <h2>Camera Tilt (Vertical)</h2>
+    <div class="button-row">
+        <button onclick="sendCamera('tilt_up')">▲ Tilt Up</button>
+        <button onclick="sendCamera('tilt_center')">● Tilt Center</button>
+        <button onclick="sendCamera('tilt_down')">▼ Tilt Down</button>
+    </div>
+</div>
+
+<p id="camera-status" class="msg-ok" style="margin-top:30px;"></p>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+async function sendCamera(cmd) {
+    const statusEl = document.getElementById('camera-status');
+    statusEl.textContent = "Sending '" + cmd + "'...";
+    statusEl.className = "msg-ok";
+    try {
+        const res = await fetch("/api/camera", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ command: cmd })
+        });
+        const data = await res.json();
+        if (res.ok) {
+            statusEl.textContent = "Camera command sent: " + cmd;
+        } else {
+            statusEl.textContent = "Error: " + (data.error || "unknown error");
+            statusEl.className = "msg-err";
+        }
+    } catch (e) {
+        statusEl.textContent = "Network error: " + e;
+        statusEl.className = "msg-err";
+    }
+}
+</script>
+{% endblock %}

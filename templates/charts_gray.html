@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Grayscale sensor chart{% endblock %}
+
+{% block content %}
+<h1>Grayscale sensor chart</h1>
+<form method="get">
+    <label for="date">Choose date (UTC):</label>
+    <input type="date" id="date" name="date" value="{{ chosen_date }}">
+    <button type="submit">Load</button>
+</form>
+
+<p>Grayscale readings (left / mid / right) for {{ chosen_date }}.</p>
+
+{% if labels %}
+    <canvas id="grayChart"
+            width="800"
+            height="400"
+            data-labels='{{ labels | tojson }}'
+            data-left='{{ left_vals | tojson }}'
+            data-mid='{{ mid_vals | tojson }}'
+            data-right='{{ right_vals | tojson }}'></canvas>
+{% else %}
+    <p>No grayscale data found for this date.</p>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+{% if labels %}
+  <script src="{{ url_for('static', filename='js/charts_gray.js') }}"></script>
+{% endif %}
+{% endblock %}
