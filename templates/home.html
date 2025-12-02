@@ -1,23 +1,63 @@
 {% extends "base.html" %}
 
-{% block title %}PiCarX Live Dashboard{% endblock %}
+{% block title %}VisionTrack-X – Live Dashboard{% endblock %}
 
 {% block content %}
-<h1>PiCarX Live Dashboard</h1>
-<p>
-This page shows <b>live data</b> from Adafruit IO for the ultrasonic sensor,
-the middle grayscale sensor, and the last TTS message spoken by the car.
-</p>
 
-<div class="card">
-    <h2>Live sensors (Adafruit IO)</h2>
+<section class="hero">
+    <div class="hero-grid">
+        <div class="hero-text">
+            <div class="hero-pill">IoT • Computer Vision • Robotics</div>
+            <h1>VisionTrack-X Autonomous PiCar</h1>
+            <p class="hero-tagline">
+                A Raspberry&nbsp;Pi-powered smart rover that streams live telemetry,
+                reacts to obstacles in real time, and syncs its journeys to the cloud.
+            </p>
+
+            <div class="hero-cta-row">
+                <a href="{{ url_for('sensor_data') }}" class="btn-primary">View Sensor History</a>
+                <a href="{{ url_for('control_motors') }}" class="btn-ghost">Drive the Car</a>
+            </div>
+
+            <ul class="hero-highlights">
+                <li>Live ultrasonic &amp; grayscale data from Adafruit IO</li>
+                <li>Cloud logging to Neon PostgreSQL</li>
+                <li>Remote control for motors, steering, camera &amp; TTS</li>
+            </ul>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-orbit"></div>
+            <div class="hero-orbit hero-orbit--inner"></div>
+
+            <div class="hero-logo-badge float-slow">
+                <img src="{{ url_for('static', filename='img/visiontrack_logo.png') }}"
+                     alt="VisionTrack-X logo">
+            </div>
+
+            <figure class="hero-car float-medium">
+                <img src="{{ url_for('static', filename='img/car_top.png') }}"
+                     alt="VisionTrack-X PiCarX robot">
+                <figcaption>VisionTrack-X PiCarX on the test track</figcaption>
+            </figure>
+        </div>
+    </div>
+</section>
+
+<section class="card">
+    <h2>Live Telemetry (Adafruit IO)</h2>
+    <p class="section-subtitle">
+        Streaming ultrasonic distance and mid-grayscale values from the rover.  
+        The chart updates automatically every 5 seconds.
+    </p>
     <canvas id="liveChart" width="900" height="400"></canvas>
-</div>
+</section>
 
-<div class="card">
-    <h2>Last TTS message</h2>
-    <p><b>Text:</b> <span id="tts_text">(loading...)</span></p>
-</div>
+<section class="card">
+    <h2>Last Text-to-Speech Command</h2>
+    <p><b>Message:</b> <span id="tts_text" class="tts-text">(loading...)</span></p>
+</section>
+
 {% endblock %}
 
 {% block extra_scripts %}

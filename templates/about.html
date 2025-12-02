@@ -1,21 +1,101 @@
 {% extends "base.html" %}
 
-{% block title %}About – PiCarX{% endblock %}
+{% block title %}About – VisionTrack-X{% endblock %}
 
 {% block content %}
-<h1>About this project</h1>
-<p>
-This IoT project uses a Raspberry Pi and the PiCarX robot car.
-The Pi sends sensor data (ultrasonic distance, grayscale sensors, and TTS text)
-to Adafruit IO and also stores it in a local SQLite database.
-When Internet is available, the Pi synchronizes the local data with a Neon
-PostgreSQL database in the cloud.
-</p>
-<p>
-This Flask web app connects to:
-</p>
-<ul>
-    <li>Adafruit IO (for live sensor values and remote control).</li>
-    <li>Neon (for querying and plotting historical sensor data).</li>
-</ul>
+
+<section class="card">
+    <h1>About VisionTrack-X</h1>
+
+    <!-- Car image here -->
+    <div class="about-car-wrapper">
+        <img src="{{ url_for('static', filename='img/car_top.png') }}"
+             alt="VisionTrack-X PiCarX"
+             class="about-car-img">
+    </div>
+
+    <p>
+        <b>VisionTrack-X</b> is an IoT and robotics project built on the PiCarX robot platform
+        and a Raspberry&nbsp;Pi. The rover is capable of real-time sensing, obstacle avoidance,
+        line following, and live telemetry streaming to the cloud.
+    </p>
+    <p>
+        The car continuously publishes <b>ultrasonic distance</b>,
+        <b>grayscale line-tracking</b> values, and <b>text-to-speech messages</b> to Adafruit&nbsp;IO.
+        It stores data locally in SQLite and synchronizes it to a managed
+        <b>Neon PostgreSQL</b> database whenever Internet connectivity is available.
+    </p>
+    <p>
+        This Flask dashboard provides real-time monitoring, historical data analysis,
+        and remote control for motors, steering, camera, and TTS.
+    </p>
+
+    <div class="about-tech-grid">
+        <div class="about-tech">
+            <h3>Hardware</h3>
+            <ul>
+                <li>SunFounder PiCar-X robot chassis</li>
+                <li>Raspberry&nbsp;Pi with Robot HAT</li>
+                <li>Ultrasonic distance sensor</li>
+                <li>Grayscale line-tracking sensor array</li>
+                <li>Pan-tilt camera + speaker</li>
+            </ul>
+        </div>
+
+        <div class="about-tech">
+            <h3>Software &amp; Cloud</h3>
+            <ul>
+                <li>Python robot control scripts</li>
+                <li>Flask dashboard</li>
+                <li>Adafruit IO (MQTT) for live telemetry</li>
+                <li>Neon PostgreSQL for cloud storage</li>
+                <li>Render for cloud deployment</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="card team-section">
+    <h2>Project Team</h2>
+    <p class="section-subtitle">
+        The VisionTrack-X rover was designed, wired, coded, and tested by the following team.
+        (No human photos included intentionally.)
+    </p>
+
+    <div class="team-grid">
+        <article class="team-card">
+            <h3>Samuel Reyes</h3>
+            <p class="team-role">IoT Developer &amp; Dashboard Lead</p>
+            <p class="team-bio">
+                Developed the control scripts, MQTT integration, and full Flask dashboard.
+                Designed the cloud architecture and synchronization pipeline.
+            </p>
+        </article>
+
+        <article class="team-card">
+            <h3>Christopher Hernandez</h3>
+            <p class="team-role">Hardware &amp; Robotics</p>
+            <p class="team-bio">
+                Assembled the PiCar-X, wired and calibrated sensors, and optimized
+                line-tracking and obstacle-avoidance behavior.
+            </p>
+        </article>
+
+        <article class="team-card">
+            <h3>Team Member 3</h3>
+            <p class="team-role">Testing &amp; Data Analysis</p>
+            <p class="team-bio">
+                Assisted with test runs, sensor logging, and tuning the rover using
+                historical Neon database data.
+            </p>
+        </article>
+    </div>
+</section>
+
+<section class="about-footer">
+    <p class="copyright">
+        © 2025 VisionTrack-X Team. All rights reserved.
+    </p>
+</section>
+
 {% endblock %}
