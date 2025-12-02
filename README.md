@@ -24,6 +24,17 @@ the Flask app handles **visualization + remote control**.
 
 ---
 
+
+## 🔗 Related Repository (Full PiCar-X System)
+
+👉 **Main PiCar-X Project Repository:**  
+https://github.com/elPerax/Picar-X-v2.0-IoT-Smart-Robot-Car
+
+This Flask dashboard is the *cloud & visualization component* of that full system.
+
+---
+
+
 ## 🧠 Features Implemented
 
 ### ✅ Live Sensor Dashboard
